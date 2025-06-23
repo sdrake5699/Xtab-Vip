@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UgPhone - VPN & Gaming</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background: #f5f5f5;
+        }
+        
+        /* Iframe chứa nội dung */
+        .iframe-container {
+            width: 100%;
+            height: calc(100vh - 60px);
+            border: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Thanh tab dưới cùng */
+        .tab-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            background: #fff;
+            border-top: 1px solid #e0e0e0;
+            padding: 8px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 100;
+        }
+        
+        /* Mỗi item tab */
+        .tab-item {
+            text-align: center;
+            flex: 1;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 5px 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Hiệu ứng sáng lên khi active */
+        .tab-item.active {
+            transform: translateY(-5px);
+        }
+        
+        .tab-item.active span {
+            color: #ff4757;
+            font-weight: bold;
+        }
+        
+        .tab-item img {
+            width: 24px;
+            height: 24px;
+            display: block;
+            margin: 0 auto 4px;
+            transition: transform 0.3s ease;
+        }
+        
+        .tab-item.active img {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+        
+        .tab-item span {
+            color: #666;
+            transition: color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Nội dung chính -->
+    <iframe id="iframe-content" class="iframe-container" src="https://meolazy.github.io/Main"></iframe>
+    
+    <!-- Thanh điều hướng -->
+    <div class="tab-bar">
+        <div class="tab-item active" onclick="openTab('https://meolazy.github.io/Main', this)" data-tab="thietbi">
+            <img src="https://i.imgur.com/8AMk0TU.png" alt="VPN">
+            <span>Thiết Bị VPN</span>
+        </div>
+        <div class="tab-item" onclick="openTab('https://meolazy.github.io/xPro/', this)" data-tab="game">
+            <img src="https://i.imgur.com/rvmhLgP.png" alt="Game">
+            <span>Thiết Bị Pro</span>
+        </div>
+        <div class="tab-item" onclick="openTab('https://meolazy.github.io/Lazy', this)" data-tab="explore">
+            <img src="https://i.imgur.com/mdFmmVr.png" alt="Explore">
+            <span>Khám Phá</span>
+        </div>
+        <div class="tab-item" onclick="openTab('https://meolazy.github.io/Home/', this)" data-tab="home">
+            <img src="https://i.imgur.com/gPPZf93.png" alt="Home">
+            <span>Trang Chủ</span>
+        </div>
+        <div class="tab-item" onclick="openTab('https://meolazy.github.io/Settings/', this)" data-tab="settings">
+            <img src="https://i.imgur.com/WhQ50sV.png" alt="Settings">
+            <span>Cài Đặt</span>
+        </div>
+    </div>
+
+    <script>
+        // Hàm chuyển tab
+        function openTab(url, element) {
+            // Hiệu ứng mờ khi chuyển trang
+            document.getElementById('iframe-content').style.opacity = '0';
+            
+            // Đổi tab active
+            document.querySelectorAll('.tab-item').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            element.classList.add('active');
+            
+            // Tải trang mới sau 0.3s để hiệu ứng mượt mà
+            setTimeout(() => {
+                document.getElementById('iframe-content').src = url;
+                document.getElementById('iframe-content').style.opacity = '1';
+            }, 300);
+        }
+        
+        // Tự động đổi màu icon khi active
+        document.querySelectorAll('.tab-item').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Reset tất cả icons về màu gốc
+                document.querySelectorAll('.tab-item img').forEach(img => {
+                    img.style.filter = 'none';
+                });
+                
+                // Làm sáng icon được chọn
+                this.querySelector('img').style.filter = 'brightness(1.2)';
+            });
+        });
+    </script>
+</body>
+</html>
